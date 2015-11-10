@@ -2,6 +2,7 @@
  * CS:APP Data Lab 
  * 
  * <Please put your name and userid here>
+ * Username = Jie Zhang
  * 
  * bits.c - Source file with your solutions to the Lab.
  *          This is the file you will hand in to your instructor.
@@ -138,8 +139,9 @@ NOTES:
  *   Max ops: 8
  *   Rating: 1
  */
+/*Algo : attention to the realtionship of 0 and 1 */
 int bitOr(int x, int y) {
-  return 2;
+    return ~(~x&~y);
 }
 /* 
  * getByte - Extract byte n from word x
@@ -149,16 +151,9 @@ int bitOr(int x, int y) {
  *   Max ops: 6
  *   Rating: 2
  */
+/* Algo: x >> 8*n and then get 8 bit of right */
 int getByte(int x, int n) {
-
-
-
-
-
-
-
-  return 2;
-
+    return (x>>(n<<3))&0xff;
 }
 /* 
  * logicalShift - shift x to the right by n, using a logical shift
@@ -168,8 +163,11 @@ int getByte(int x, int n) {
  *   Max ops: 20
  *   Rating: 3 
  */
+/* Algo: x>>n and use method to make the highest n bit zero */
+/* Attention: consider n==0 => use !!n not 0x80000000 */
+/* Attention: consider >>n we make n-1 bit to zero not n so >>n and <<1 (n-1) */
 int logicalShift(int x, int n) {
-  return 2;
+    return (x>>n) & (~((((!!n)<<31)>>n)<<1));
 }
 /*
  * bitParity - returns 1 if x contains an odd number of 0's
@@ -179,7 +177,7 @@ int logicalShift(int x, int n) {
  *   Rating: 4
  */
 int bitParity(int x) {
-  return 2;
+    return 0;
 }
 /* 
  * fitsBits - return 1 if x can be represented as an 
@@ -210,8 +208,12 @@ int negate(int x) {
  *   Max ops: 8
  *   Rating: 3
  */
+/* Attention: exception when x=0 */
 int isPositive(int x) {
-  return 2;
+    return !(x>>31|(!x));
+}
+int isNonNegative(int x) {
+    return (x>>31)+1;
 }
 /* 
  * addOK - Determine if can compute x+y without overflow
